@@ -731,6 +731,11 @@ public final class CameraManager {
 
             try {
                 numCameras = cameraService.getNumberOfCameras(CAMERA_TYPE_ALL);
+                // Temp hack - force 0 cameras (attempt to avoid android.os.ServiceSpecificException: connectHelper:928: Illegal argument to HAL module for camera "0")
+                if (numCameras > 0 ) {
+                   Log.e(TAG, String.format("PST DEBUG - Number of cameras is %d - forcing null return ( no cameras - temp HACK)", numCameras));
+                   return deviceIdList;
+                }
                 /* Force to exposing only two cameras
                  * if the package name falls in this bucket
                  */
